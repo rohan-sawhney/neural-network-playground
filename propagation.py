@@ -11,10 +11,11 @@ def forwardpropagation(x, model, args, training):
     h = x
 
     for k in range(K):
-        a, cache["fc"][k] = fully_connected(model["W"][k], model["b"][k], h)
-        h, cache["g"][k] = model["g"][k](a)
-        if args.use_dropout and k < K - 1:
-            h, cache["dp"][k] = dropout(h, training)
+        h, cache["fc"][k] = fully_connected(model["W"][k], model["b"][k], h)
+        if k < K - 1:
+            h, cache["g"][k] = model["g"][k](h)
+            if args.use_dropout:
+                h, cache["dp"][k] = dropout(h, training)
 
     return h, cache
 
