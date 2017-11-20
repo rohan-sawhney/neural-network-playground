@@ -129,7 +129,6 @@ def optimize(x_train, y_train, x_valid, y_valid, model, regularizer, optimizer, 
         epoch_loss = 0
 
         for t in range(0, T, args.batch_size):
-            print("batch: ", t)
             t_end = T if t + args.batch_size > T else t + args.batch_size
             x_batch = x_train[t:t_end]
             y_batch = y_train[t:t_end]
