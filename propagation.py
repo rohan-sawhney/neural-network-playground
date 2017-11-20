@@ -11,18 +11,17 @@ def forwardpropagation(x, model, args, training):
     h = x
 
     for k in range(K):
-        h, cache["fc"][k] = fully_connected(model["W"][k], model["b"][k], h)
-        if k < K - 1:
-            h, cache["g"][k] = model["g"][k](h)
-            if args.use_dropout:
-                h, cache["dp"][k] = dropout(h, training)
+        a, cache["fc"][k] = fully_connected(model["W"][k], model["b"][k], h)
+        h, cache["g"][k] = model["g"][k](a)
+        if k < K - 1 and args.use_dropout:
+            h, cache["dp"][k] = dropout(h, training)
 
     return h, cache
 
 
 def backpropagation(x, y, model, loss, dloss, args):
     K = len(model["W"])
-    grad = {"dW": [None] * K, "db": [None] * K}
+    grad = {"dW": [None] * K, "db": [None] * K, "da": [None] * K}
     h, cache = forwardpropagation(x, model, args, True)
 
     l, y_pred = loss(h, y)
@@ -30,6 +29,7 @@ def backpropagation(x, y, model, loss, dloss, args):
 
     for k in range(K - 1, -1, -1):
         grad["dW"][k], grad["db"][k], dh = dfully_connected(da, cache["fc"][k])
+        grad["da"][k] = da
         if k > 0:
             if args.use_dropout:
                 dh = ddropout(dh, cache["dp"][k - 1])
