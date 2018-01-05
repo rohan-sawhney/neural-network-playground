@@ -1,6 +1,6 @@
 # neural-network-playground
 
-This codebase contains an implementation of a feedforward neural network, a RBM, an autoencoder, a denoising autoencoder and a neural language model. To train these models on the MNIST dataset, type the any of the following commands on the command line:
+This codebase contains an implementation of a feedforward neural network, RBM, autoencoder, denoising autoencoder and neural language model. To train these models on the MNIST dataset, type the any of the following commands on the command line:
 
 ```
 python nn.py -file_train=digitstrain.txt -file_valid=digitsvalid.txt
